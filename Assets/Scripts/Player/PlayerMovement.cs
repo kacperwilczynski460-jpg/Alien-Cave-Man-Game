@@ -20,11 +20,10 @@ public class PlayerMovement : MonoBehaviour
         _animator = GetComponent<Animator>();
     }
 
-
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+       
     }
 
     // Update is called once per frame
@@ -42,5 +41,8 @@ public class PlayerMovement : MonoBehaviour
             _animator.SetFloat(_LastHorizontal, _movement.x);
             _animator.SetFloat(_LastVertical, _movement.y);
         }
+
+       
+
     }
 }
