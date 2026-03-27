@@ -1,8 +1,8 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour
 {
-
     [SerializeField] private float _moveSpeed = 5f;
 
     private Vector2 _movement;
@@ -18,15 +18,21 @@ public class PlayerMovement : MonoBehaviour
     {
         _rb = GetComponent<Rigidbody2D>();
         _animator = GetComponent<Animator>();
+
+        SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    private void OnDestroy()
     {
-       
+        SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
-    // Update is called once per frame
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        _movement = Vector2.zero;
+        _rb.linearVelocity = Vector2.zero;
+    }
+
     void Update()
     {
         _movement.Set(InputManager.Movement.x, InputManager.Movement.y);
@@ -41,8 +47,5 @@ public class PlayerMovement : MonoBehaviour
             _animator.SetFloat(_LastHorizontal, _movement.x);
             _animator.SetFloat(_LastVertical, _movement.y);
         }
-
-       
-
     }
 }

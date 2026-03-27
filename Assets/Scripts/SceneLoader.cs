@@ -1,8 +1,9 @@
 using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class NewMonoBehaviourScript : MonoBehaviour
+public class SceneLoader : MonoBehaviour
 {
 
     public string SceneName;

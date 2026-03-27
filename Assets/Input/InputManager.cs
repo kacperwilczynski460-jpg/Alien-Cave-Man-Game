@@ -1,9 +1,9 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class InputManager : MonoBehaviour
 {
-    
     public static Vector2 Movement;
 
     private PlayerInput _playerInput;
@@ -11,22 +11,22 @@ public class InputManager : MonoBehaviour
 
     private void Awake()
     {
-       _playerInput = GetComponent<PlayerInput>(); 
+        _playerInput = GetComponent<PlayerInput>();
+        _moveAction = _playerInput.actions["Move"];
 
-         _moveAction = _playerInput.actions["Move"];
-
-
+        SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
-
-
-        // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    private void OnDestroy()
     {
-        
+        SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
-    // Update is called once per frame
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        Movement = Vector2.zero; // 🔥 RESET INPUT
+    }
+
     void Update()
     {
         Movement = _moveAction.ReadValue<Vector2>();
